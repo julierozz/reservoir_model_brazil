@@ -21,7 +21,6 @@ select intrulenumber
 			urbout=0;
 			smallagout=0;
 			bigagout=0;
-			say("urbout")
 		end
 	case 2
 		if vol>criticalvol

@@ -151,9 +151,9 @@ function combi_out = switch_indice_in_combi(combi_in,index_ranks,new_index_value
     
 endfunction
 
-function [outputdata]=update_csv(inputcsvfile,newdata,scenario_number)
+function [outputdata]=update_csv(inputcsvfile,newdata,scenario_number,months)
 	if ~isfile(OUTPUT+inputcsvfile)
-		mycsvdata=[];
+		mycsvdata=["",months];
 	else
 		mycsvdata=csvRead(OUTPUT+inputcsvfile,[],[],"string");
 	end
@@ -161,9 +161,9 @@ function [outputdata]=update_csv(inputcsvfile,newdata,scenario_number)
 	csvWrite(outputdata,OUTPUT+inputcsvfile);
 endfunction
 
-function [outputdata]=get_scenar_from_data(inputcsvfile,scenariocharac,outputcsvname)
+function [outputdata]=get_scenar_from_data(inputcsvfile,scenariocharac,outputcsvname,firstmonth)
 	mydata=csvRead(DATA+inputcsvfile,[],[],"string")
-	datastarts=find(mydata(1,:)=="JAN",1)
+	datastarts=find(mydata(1,:)==firstmonth,1)
 	outputdata=mydata(mydata(:,1)==scenariocharac,datastarts:$);
 	if outputdata==[]
 		outputdata=mydata(mydata(:,1)==scenariocharac+" ",datastarts:$);
@@ -172,4 +172,10 @@ function [outputdata]=get_scenar_from_data(inputcsvfile,scenariocharac,outputcsv
 		disp(outputcsvname+" is empty")
 	end
 	csvWrite(outputdata,DATA_scenar+outputcsvname)
+endfunction
+
+function months=get_months_from_input(inputcsvfile,firstmonth);
+	mydata=csvRead(DATA+inputcsvfile,[],[],"string")
+	datastarts=find(mydata(1,:)==firstmonth,1);
+	months=mydata(1,datastarts:$);
 endfunction

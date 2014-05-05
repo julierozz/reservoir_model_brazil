@@ -6,7 +6,7 @@ bigag_scenar   =csvRead("bigag_scenar.csv");
 urb_scenar     =csvRead("urb_scenar.csv");
 
 volmax=23500000;
-vol0=6*10^6;
+vol0=volmax*eval(csvRead("vol0.csv")); //6*10^6;
 criticalvol=csvRead("criticalvol.csv");
 minvol=csvRead("minvol.csv");
 evap=csvRead("evap.csv");

@@ -6,8 +6,6 @@ if ~isdef("scenario_number")
 	scenario_number="last_run_scenario";
 end
 
-month_names=["Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"];
-
 exec("calibration.sce");
 
 t1=size(inflow_scenar,"c");
@@ -45,8 +43,12 @@ for i=1:1:tmax
 	bigagout(:,i)=bgag;
 	urbout(:,i)=ur;
 	
-	volume(i+1)=reservoir_dynamics(volume(i),inflowin(:,i),outflow(:,i),evapin(:,i),volmax);
+	if i<tmax
+		volume(i+1)=reservoir_dynamics(volume(i),inflowin(:,i),outflow(:,i),evapin(:,i),volmax);
+	end
 end
+
+if %f
 
 xset("window",0)
 clf
@@ -73,3 +75,5 @@ myfontSize=4
 ylabs("volume in m3")
 xlabs("months")
 export_fig("outputs_ag_urb_"+scenario_number,"pdf")
+
+end

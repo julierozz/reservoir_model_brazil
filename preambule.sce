@@ -9,3 +9,7 @@ mkdir(DATA_scenar);
 getd(MODEL);
 getd(LIB);
 cd(MODEL);
+
+if evstr(part(getversion(),8:10))<5.5
+csvDefault("eol","linux")
+end

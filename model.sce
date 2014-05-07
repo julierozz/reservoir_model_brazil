@@ -10,7 +10,7 @@ exec("calibration.sce");
 
 t1=size(inflow_scenar,"c");
 
-for data=["bigag_scenar" "smallag_scenar" "urb_scenar" "evap"]
+for data=["bigag_scenar" "smallag_scenar" "urb_scenar" "evap" "precip_scenar"]
 	execstr("ti=size("+data+",2);");
 	if typeof(t1/ti)=="constant"
 		for j=1:1:t1/ti-1
@@ -27,14 +27,17 @@ bigagin  =eval(bigag_scenar(1:tmax));
 urbin    =eval(urb_scenar(1:tmax));
 inflowin =eval(inflow_scenar(1:tmax));
 evapin=eval(evap(1:tmax));
+precipin=eval(precip_scenar(1:tmax));
 
 smallagout =zeros(nrows,tmax);
 bigagout   =zeros(nrows,tmax);
 urbout     =zeros(nrows,tmax);
 outflow    =zeros(nrows,tmax);
 volume     =zeros(nrows,tmax);
+availwater =zeros(nrows,tmax);
 
 volume(1)=vol0;
+availwater(1)=vol0-minvol;
 
 for i=1:1:tmax
 	[flow,smag,bgag,ur]=allocation_rule(rulenumber,volume(:,i),smallagin(:,i),bigagin(:,i),urbin(:,i),criticalvol,minvol);
@@ -44,7 +47,8 @@ for i=1:1:tmax
 	urbout(:,i)=ur;
 	
 	if i<tmax
-		volume(i+1)=reservoir_dynamics(volume(i),inflowin(:,i),outflow(:,i),evapin(:,i),volmax);
+		volume(i+1)=reservoir_dynamics(volume(i),inflowin(:,i),precipin(:,i),outflow(:,i),evapin(:,i),volmax);
+		availwater(i+1)=max(0,volume(i)+inflowin(:,i)+precipin(:,i)-evapin(:,i)-smallagout(:,i)-minvol);
 	end
 end
 

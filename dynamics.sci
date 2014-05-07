@@ -44,7 +44,7 @@ select intrulenumber
 endfunction
 
 
-function [newvol]=reservoir_dynamics(vol,inflow,outflow,evap,volmax)
-	deltavol=inflow-outflow-evap;
+function [newvol]=reservoir_dynamics(vol,inflow,precip,outflow,evap,volmax)
+	deltavol=inflow+precip-outflow-evap;
 	newvol=max(0,min(vol+deltavol,volmax));
 endfunction

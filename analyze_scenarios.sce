@@ -8,7 +8,7 @@ urbout=csvRead(OUTPUT+"urbout.csv");
 volume=csvRead(OUTPUT+"volume.csv");
 outflow=csvRead(OUTPUT+"outflow.csv");
 
-agg_conso_bigag=sum(bigag(2:$,:),"c");
+agg_conso_bigag=sum(bigag(3:$,:),"c");
 pensize=3;
 myfontSize=3
 n_histo=200;

@@ -48,7 +48,7 @@ for i=1:1:tmax
 	
 	if i<tmax
 		volume(i+1)=reservoir_dynamics(volume(i),inflowin(:,i),precipin(:,i),outflow(:,i),evapin(:,i),volmax);
-		availwater(i+1)=max(0,volume(i)+inflowin(:,i)+precipin(:,i)-evapin(:,i)-smallagout(:,i)-minvol);
+		availwater(i+1)=volume(i)+inflowin(:,i)+precipin(:,i)-evapin(:,i)-smallagout(:,i);
 	end
 end
 
